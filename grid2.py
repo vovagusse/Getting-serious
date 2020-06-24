@@ -1,5 +1,6 @@
 GAME = True #game status iteriable
 f = [] #field or grid
+player_pos = [0, 0]
 DEFAULT_PLAYER = 'O'
 DEFAULT_EMPTY_GRID_ELEMENT = '-'
 
@@ -12,16 +13,21 @@ def main():
         move_value = move_input()
         move_on_f(f, move_value)
 
-        
-
 def make_player(f):
-    f[0][0] = 'O'
+    f[player_pos[0]][player_pos[1]] = DEFAULT_PLAYER
 
 def render_field(f, num):
-    # for x in range(num):
-    #     print(f[x])
-    for x in range(num):
-        for y in range(num): print(f[x][y])
+    for x in f:
+        tmp = ''
+        for y in x:
+            if y == DEFAULT_PLAYER:
+                tmp += DEFAULT_PLAYER
+            else:
+                tmp += DEFAULT_EMPTY_GRID_ELEMENT
+        print(tmp)
+        tmp = ''
+    
+    
 
 def move_input():
     return str.lower(input('Where to move?(type "HELP" to see commands list, "END" to end the program) Type here: '))
@@ -30,11 +36,21 @@ def move_on_f(f, move_value):
     if move_value == 'end':
         GAME = False
     elif move_value == 'right':
-        pass
+        player_pos[0] += 1
+        x = player_pos[1]
+        y = player_pos[0]
+        f[x][y] = DEFAULT_PLAYER
+        f[x][y - 1] = DEFAULT_EMPTY_GRID_ELEMENT
+
     elif move_value == 'up':
         pass
     elif move_value == 'down':
-        pass
+        player_pos[1] += 1
+        x = player_pos[1]
+        y = player_pos[0]
+        f[x][y] = DEFAULT_PLAYER
+        f[x - 1][y] = DEFAULT_EMPTY_GRID_ELEMENT
+
     elif move_value == 'help':
         print('------------------------------------------------------')
         print(''' Help - commands you can use in the program are: \n    Movement: "up", "down", "left", "right";  \n    Misc: "end", "help"  ''')
